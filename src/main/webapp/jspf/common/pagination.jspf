@@ -1,0 +1,260 @@
+<%-- any content can be specified here e.g.: --%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page pageEncoding="UTF-8" %>
+<div class="card-footer">
+    <div class="row">
+        <div class="col-sm-12 col-md-5">
+            <div class="dataTables_info" id="clienteTable_info" role="status" aria-live="polite">
+                Showing ${(actualPage*sizePage)+1} to ${(actualPage*sizePage)+totalRegistersThisPage} of ${totalRegisters}
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-7">
+            <div class="dataTables_paginate paging_simple_numbers" id="clienteTable_paginate">
+                <ul class="pagination float-right">
+                    <c:choose>
+                        <c:when test="${totalPages>7}">
+                            <c:choose>
+                                <c:when test="${actualPage==1}">
+                                    <li class="paginate_button page-item previous disabled" id="clienteTable_previous">
+                                        <a class="page-link">Previous</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="paginate_button page-item" id="clienteTable_previous">
+                                        <a href="admin/clientes/lista?page=${actualPage-1}&size=${sizePage}" class="page-link">Previous</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <c:forEach begin="1" end="7" var="page">
+                                <c:choose>
+                                    <c:when test="${page==1}">
+                                        <c:choose>
+                                            <c:when test="${actualPage==page}">
+                                                <li class="paginate_button page-item active">
+                                                    <a class="page-link">${page}</a>
+                                                </li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li class="paginate_button page-item">
+                                                    <a href="admin/clientes/lista?page=${page}&size=${sizePage}" class="page-link">${page}</a>
+                                                </li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:when>
+                                    <c:when test="${page==2}">
+                                        <c:choose>
+                                            <c:when test="${actualPage>=4}">
+                                                <li class="paginate_button page-item disabled">
+                                                    <a class="page-link">...</a>
+                                                </li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:choose>
+                                                    <c:when test="${actualPage==page}">
+                                                        <li class="paginate_button page-item active">
+                                                            <a class="page-link">${page}</a>
+                                                        </li>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <li class="paginate_button page-item">
+                                                            <a href="admin/clientes/lista?page=${page}&size=${sizePage}" class="page-link">${page}</a>
+                                                        </li>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:when>
+                                    <c:when test="${page==3}">
+                                        <c:choose>
+                                            <c:when test="${actualPage<3}">
+                                                <li class="paginate_button page-item">
+                                                    <a href="admin/clientes/lista?page=${page}&size=${sizePage}" class="page-link">${page}</a>
+                                                </li>
+                                            </c:when>
+                                            <c:when test="${actualPage==3}">
+                                                <li class="paginate_button page-item active">
+                                                    <a class="page-link">${page}</a>
+                                                </li>
+                                            </c:when>
+                                            <c:when test="${actualPage>3}">
+                                                <c:choose>
+                                                    <c:when test="${totalPages-(actualPage)<=3}">
+                                                        <li class="paginate_button page-item">
+                                                            <a href="admin/clientes/lista?page=${totalPages-4}&size=${sizePage}" class="page-link">${totalPages-4}</a>
+                                                        </li>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <li class="paginate_button page-item">
+                                                            <a href="admin/clientes/lista?page=${actualPage-1}&size=${sizePage}" class="page-link">${actualPage-1}</a>
+                                                        </li>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:when>
+                                        </c:choose>
+                                    </c:when>
+                                    <c:when test="${page==4}">
+                                        <c:choose>
+                                            <c:when test="${actualPage<4}">
+                                                <li class="paginate_button page-item">
+                                                    <a href="admin/clientes/lista?page=${page}&size=${sizePage}" class="page-link">${page}</a>
+                                                </li>
+                                            </c:when>
+                                            <c:when test="${actualPage==4}">
+                                                <li class="paginate_button page-item active">
+                                                    <a class="page-link">${page}</a>
+                                                </li>
+                                            </c:when>
+                                            <c:when test="${actualPage>4}">
+                                                <c:choose>
+                                                    <c:when test="${totalPages-(actualPage)<=2}">
+                                                        <li class="paginate_button page-item">
+                                                            <a href="admin/clientes/lista?page=${totalPages-3}&size=${sizePage}" class="page-link">${totalPages-3}</a>
+                                                        </li>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <li class="paginate_button page-item active">
+                                                            <a class="page-link">${actualPage}</a>
+                                                        </li>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:when>
+                                        </c:choose>
+                                    </c:when>
+                                    <c:when test="${page==5}">
+                                        <c:choose>
+                                            <c:when test="${actualPage<5}">
+                                                <li class="paginate_button page-item">
+                                                    <a href="admin/clientes/lista?page=${page}&size=${sizePage}" class="page-link">${page}</a>
+                                                </li>
+                                            </c:when>
+                                            <c:when test="${actualPage==5}">
+                                                <li class="paginate_button page-item">
+                                                    <a href="admin/clientes/lista?page=${page+1}&size=${sizePage}" class="page-link">${page+1}</a>
+                                                </li>
+                                            </c:when>
+                                            <c:when test="${actualPage>5}">
+                                                <c:choose>
+                                                    <c:when test="${totalPages-(actualPage)<=2}">
+                                                        <c:choose>
+                                                            <c:when test="${(totalPages-2)==(actualPage)}">
+                                                                <li class="paginate_button page-item active">
+                                                                    <a class="page-link">${totalPages-2}</a>
+                                                                </li>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <li class="paginate_button page-item">
+                                                                    <a href="admin/clientes/lista?page=${totalPages-2}&size=${sizePage}" class="page-link">${totalPages-2}</a>
+                                                                </li>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <li class="paginate_button page-item">
+                                                            <a href="admin/clientes/lista?page=${actualPage+1}&size=${sizePage}" class="page-link">${actualPage+1}</a>
+                                                        </li>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:when>
+                                        </c:choose>
+                                    </c:when>            
+                                    <c:when test="${page==6}">
+                                        <c:choose>
+                                            <c:when test="${(totalPages-actualPage)>3}">
+                                                <li class="paginate_button page-item disabled">
+                                                    <a class="page-link">...</a>
+                                                </li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:choose>
+                                                    <c:when test="${actualPage==totalPages-1}">
+                                                        <li class="paginate_button page-item active">
+                                                            <a class="page-link">${totalPages-1}</a>
+                                                        </li>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <li class="paginate_button page-item">
+                                                            <a href="admin/clientes/lista?page=${totalPages-1}&size=${sizePage}" class="page-link">${totalPages-1}</a>
+                                                        </li>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:when>                    
+                                    <c:when test="${page==7}">
+                                        <c:choose>
+                                            <c:when test="${actualPage==totalPages}">
+                                                <li class="paginate_button page-item active">
+                                                    <a class="page-link">${totalPages}</a>
+                                                </li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li class="paginate_button page-item">
+                                                    <a href="admin/clientes/lista?page=${totalPages}&size=${sizePage}" class="page-link">${totalPages}</a>
+                                                </li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:when>
+                                </c:choose>
+                            </c:forEach>        
+
+                            <c:choose>
+                                <c:when test="${actualPage==totalPages-1}">
+                                    <li class="paginate_button page-item disabled" id="clienteTable_next">
+                                        <a class="page-link">Next</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="paginate_button page-item" id="clienteTable_next">
+                                        <a href="admin/clientes/lista?page=${actualPage+1}&size=${sizePage}" class="page-link">Next</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>        
+                        </c:when>
+                        <c:otherwise>
+                            <c:choose>
+                                <c:when test="${actualPage==1}">
+                                    <li class="paginate_button page-item disabled" id="clienteTable_previous">
+                                        <a class="page-link">Previous</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="paginate_button page-item" id="clienteTable_previous">
+                                        <a href="admin/clientes/lista?page=${actualPage-1}&size=${sizePage}" class="page-link">Previous</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+                            <c:forEach begin="0" end="${totalPages-1}" var="page">
+                                <c:choose>
+                                    <c:when test="${actualPage==(page+1)}">
+                                        <li class="paginate_button page-item active">
+                                            <a class="page-link">${page+1}</a>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="paginate_button page-item">
+                                            <a href="admin/clientes/lista?page=${page+1}&size=${sizePage}" class="page-link">${page+1}</a>
+                                        </li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                            <c:choose>
+                                <c:when test="${actualPage==totalPages}">
+                                    <li class="paginate_button page-item disabled" id="clienteTable_next">
+                                        <a class="page-link">Next</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="paginate_button page-item" id="clienteTable_next">
+                                        <a href="admin/clientes/lista?page=${actualPage+1}&size=${sizePage}" class="page-link">Next</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:otherwise>
+                    </c:choose>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
